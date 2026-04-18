@@ -1,0 +1,30 @@
+import { AgNumericFieldProps, AgTextFieldProps, AgRadioGroupProps } from "../components";
+import AgFieldProps from "../components/AgField/AgField.props";
+
+export default class AgFieldCollection {
+    private _fields: AgFieldProps[] = [];
+    public get fields(): AgFieldProps[] {
+        return this._fields;
+    }
+
+    public addTextField(field: Omit<AgTextFieldProps, "type">) {
+        this._fields.push({
+            type: "text",
+            ...field
+        });
+    }
+
+    public addNumericField(field: Omit<AgNumericFieldProps, "type">) {
+        this._fields.push({
+            type: "number",
+            ...field
+        });
+    }
+
+    public addRadioGroup(field: Omit<AgRadioGroupProps, "type">) {
+        this._fields.push({
+            type: "radio",
+            ...field
+        });
+    }
+}

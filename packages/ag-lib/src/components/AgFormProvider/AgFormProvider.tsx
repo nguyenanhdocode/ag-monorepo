@@ -17,7 +17,7 @@ export default function AgFormProvider<T extends FieldValues>({
     const formMethods = methods || useForm<T>(options);
 
     return <FormProvider {...formMethods}>
-        <form method={method} onSubmit={formMethods.handleSubmit(onSubmit || (() => { }))}>
+        <form style={{display: "inline-block", width: "100%"}} method={method} onSubmit={formMethods.handleSubmit(onSubmit || (() => { }))}>
             {children}
         </form>
     </FormProvider>

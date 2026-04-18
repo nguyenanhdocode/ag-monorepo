@@ -1,0 +1,64 @@
+import { Col, Row } from "antd";
+import AgFieldProps from "../AgField/AgField.props";
+import { AgTextField, AgTextFieldProps } from "../AgTextField";
+import AgFieldSetProps from "./AgFieldSet.props";
+import { useMemo } from "react";
+import { useAgFormContext } from "../AgFormProvider";
+import { AgNumericField, AgNumericFieldProps } from "../AgNumericField";
+import { AgRadioGroup, AgRadioGroupProps } from "../AgRadioGroup";
+
+const AgFieldSet: React.FC<AgFieldSetProps> = ({ 
+    fields, scope, onChange, onBlur, isReadOnly
+}) => {
+
+    const { getValues } = useAgFormContext();
+
+    const renderField = (field: AgFieldProps) => {
+        switch (field.type) {
+            case "text":
+                return renderTextField(field as AgTextFieldProps);
+            case "number":
+                return renderNumericField(field as AgNumericFieldProps);
+            case "radio":
+                return renderRadioGroup(field as AgRadioGroupProps);
+            default:
+                return <span>Unsupport field type: "{field.type}"</span>
+        }
+    }
+
+    const renderTextField = (field: AgTextFieldProps) => {
+        const fieldName = scope ? `${scope}.${field.name}` : field.name;
+        const value = getValues(fieldName);
+        return <AgTextField {...field} scope={scope}
+            onChange={_ => onChange?.(value, field)}
+            onBlur={_ => onBlur?.(value, field)}
+            isReadOnly={isReadOnly}/>
+    }
+
+    const renderNumericField = (field: AgNumericFieldProps) => {
+        const fieldName = scope ? `${scope}.${field.name}` : field.name;
+        const value = getValues(fieldName);
+        return <AgNumericField {...field} scope={scope}
+            onChange={_ => onChange?.(value, field)}
+            onBlur={_ => onBlur?.(value, field)}
+            isReadOnly={isReadOnly}/>
+    }
+
+    const renderRadioGroup = (field: AgRadioGroupProps) => {
+        const fieldName = scope ? `${scope}.${field.name}` : field.name;
+        const value = getValues(fieldName);
+        return <AgRadioGroup {...field} scope={scope} onChange={_ => onChange?.(value, field)}
+        onBlur={_ => onBlur?.(value, field)} isReadOnly={isReadOnly}/>
+    }
+
+    return <Row gutter={12} >
+        {useMemo(() => (
+            fields.map((p, k) => <Col key={k} xs={(p.colSpanXs ?? 12) * 2} sm={(p.colSpanSm ?? 12) * 2} 
+            md={(p.colSpanMd ?? 12) * 2} lg={(p.colSpanLg ?? 12) * 2} xl={(p.colSpanLg ?? 12) * 2} 
+            xxl={(p.colSpanLg ?? 12) * 2} xxxl={(p.colSpanLg ?? 12) * 2}
+            style={{paddingTop: "5px", paddingBottom: "5px"}}>{renderField(p)}</Col>)
+        ), [fields])}
+    </Row>
+}
+
+export default AgFieldSet;
