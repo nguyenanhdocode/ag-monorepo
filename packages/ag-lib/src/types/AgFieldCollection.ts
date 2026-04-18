@@ -1,4 +1,4 @@
-import { AgNumericFieldProps, AgTextFieldProps, AgRadioGroupProps, AgCheckboxGroupProps } from "../components";
+import { AgNumericFieldProps, AgTextFieldProps, AgRadioGroupProps, AgCheckboxGroupProps, AgDateTimePickerProps } from "../components";
 import AgFieldProps from "../components/AgField/AgField.props";
 
 export default class AgFieldCollection {
@@ -31,6 +31,13 @@ export default class AgFieldCollection {
     public addCheckboxGroup(field: Omit<AgCheckboxGroupProps, "type">) {
         this._fields.push({
             type: "checkbox",
+            ...field
+        });
+    }
+
+    public addDateTimePicker(field: Omit<AgDateTimePickerProps, "type">) {
+        this._fields.push({
+            type: "date",
             ...field
         });
     }

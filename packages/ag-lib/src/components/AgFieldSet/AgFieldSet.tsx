@@ -7,8 +7,9 @@ import { useAgFormContext } from "../AgFormProvider";
 import { AgNumericField, AgNumericFieldProps } from "../AgNumericField";
 import { AgRadioGroup, AgRadioGroupProps } from "../AgRadioGroup";
 import { AgCheckboxGroup, AgCheckboxGroupProps } from "../AgCheckboxGroup";
+import { AgDateTimePicker, AgDateTimePickerProps } from "../AgDateTimePicker";
 
-const AgFieldSet: React.FC<AgFieldSetProps> = ({ 
+const AgFieldSet: React.FC<AgFieldSetProps> = ({
     fields, scope, onChange, onBlur, isReadOnly
 }) => {
 
@@ -24,6 +25,8 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
                 return renderRadioGroup(field as AgRadioGroupProps);
             case "checkbox":
                 return renderCheckboxGroup(field as AgCheckboxGroupProps);
+            case "date":
+                return renderDateTimePicker(field as AgDateTimePickerProps);
             default:
                 return <span>Unsupport field type: "{field.type}"</span>
         }
@@ -35,7 +38,7 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
         return <AgTextField {...field} scope={scope}
             onChange={_ => onChange?.(value, field)}
             onBlur={_ => onBlur?.(value, field)}
-            isReadOnly={isReadOnly}/>
+            isReadOnly={isReadOnly} />
     }
 
     const renderNumericField = (field: AgNumericFieldProps) => {
@@ -44,29 +47,38 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
         return <AgNumericField {...field} scope={scope}
             onChange={_ => onChange?.(value, field)}
             onBlur={_ => onBlur?.(value, field)}
-            isReadOnly={isReadOnly}/>
+            isReadOnly={isReadOnly} />
     }
 
     const renderRadioGroup = (field: AgRadioGroupProps) => {
         const fieldName = scope ? `${scope}.${field.name}` : field.name;
         const value = getValues(fieldName);
         return <AgRadioGroup {...field} scope={scope} onChange={_ => onChange?.(value, field)}
-        onBlur={_ => onBlur?.(value, field)} isReadOnly={isReadOnly}/>
+            onBlur={_ => onBlur?.(value, field)} isReadOnly={isReadOnly} />
     }
-    
+
     const renderCheckboxGroup = (field: AgCheckboxGroupProps) => {
         const fieldName = scope ? `${scope}.${field.name}` : field.name;
         const value = getValues(fieldName);
         return <AgCheckboxGroup {...field} scope={scope} onChange={_ => onChange?.(value, field)}
-        isReadOnly={isReadOnly}/>
+            isReadOnly={isReadOnly} />
+    }
+
+    const renderDateTimePicker= (field: AgDateTimePickerProps) => {
+        const fieldName = scope ? `${scope}.${field.name}` : field.name;
+        const value = getValues(fieldName);
+        return <AgDateTimePicker {...field} scope={scope}
+            onChange={_ => onChange?.(value, field)}
+            onBlur={_ => onBlur?.(value, field)}
+            isReadOnly={isReadOnly} />
     }
 
     return <Row gutter={12} >
         {useMemo(() => (
-            fields.map((p, k) => <Col key={k} xs={(p.colSpanXs ?? 12) * 2} sm={(p.colSpanSm ?? 12) * 2} 
-            md={(p.colSpanMd ?? 12) * 2} lg={(p.colSpanLg ?? 12) * 2} xl={(p.colSpanLg ?? 12) * 2} 
-            xxl={(p.colSpanLg ?? 12) * 2} xxxl={(p.colSpanLg ?? 12) * 2}
-            style={{paddingTop: "5px", paddingBottom: "5px"}}>{renderField(p)}</Col>)
+            fields.map((p, k) => <Col key={k} xs={(p.colSpanXs ?? 12) * 2} sm={(p.colSpanSm ?? 12) * 2}
+                md={(p.colSpanMd ?? 12) * 2} lg={(p.colSpanLg ?? 12) * 2} xl={(p.colSpanLg ?? 12) * 2}
+                xxl={(p.colSpanLg ?? 12) * 2} xxxl={(p.colSpanLg ?? 12) * 2}
+                style={{ paddingTop: "5px", paddingBottom: "5px" }}>{renderField(p)}</Col>)
         ), [fields])}
     </Row>
 }

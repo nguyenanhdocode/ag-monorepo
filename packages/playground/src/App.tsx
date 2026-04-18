@@ -1,4 +1,5 @@
 import { AgFormProvider, useAgFormContext, AgTextField, AgTextFieldProps, AgFieldSet, AgFieldCollection } from "ag-lib"
+import dayjs from "dayjs";
 import { useEffect } from "react";
 import { Controller } from "react-hook-form"
 
@@ -15,7 +16,8 @@ function Form() {
         setValue("master.productId", "SP-A0121");
         setValue("master.productName", "ANHDO@131");
         setValue("master.mode", "fifo");
-        setValue("master.langs", ["c", "cplusplus"])
+        setValue("master.langs", ["c", "cplusplus"]);
+        setValue("master.fromDate", dayjs(new Date()));
     }, []);
 
     var collection = new AgFieldCollection();
@@ -63,6 +65,13 @@ function Form() {
         isReadOnly: true,
         colSpanLg: 6,
         label: "Ngôn ngữ"
+    });
+
+    collection.addDateTimePicker({
+        name: "fromDate",
+        label: "Ngày bắt đầu",
+        colSpanLg: 3,
+        showTime: false
     });
 
     return <>
