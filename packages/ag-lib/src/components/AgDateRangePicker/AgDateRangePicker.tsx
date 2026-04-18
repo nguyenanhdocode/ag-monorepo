@@ -4,7 +4,7 @@ import { DatePicker, Input } from "antd";
 import Text from "antd/es/typography/Text";
 import AgDateRangePickerProps from "./AgDateRangePicker.props";
 
-const AgTextField: React.FC<AgDateRangePickerProps> = ({
+const DateRangePicker: React.FC<AgDateRangePickerProps> = ({
     name, label, scope, value, placeholder, type = "date", isReadOnly, isRequried = false
     , onChange, onBlur, showTime
 }) => {
@@ -41,4 +41,4 @@ const AgTextField: React.FC<AgDateRangePickerProps> = ({
         )} />
 }
 
-export default AgTextField;
+export default DateRangePicker;

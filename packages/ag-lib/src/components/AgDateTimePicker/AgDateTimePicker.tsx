@@ -4,7 +4,7 @@ import { DatePicker, Input } from "antd";
 import Text from "antd/es/typography/Text";
 import AgDateTimePickerProps from "./AgDateTimePicker.props";
 
-const AgTextField: React.FC<AgDateTimePickerProps> = ({
+const AgDateTimePicker: React.FC<AgDateTimePickerProps> = ({
     name, label, scope, value, placeholder, type = "date", isReadOnly, isRequried = false
     , onChange, onBlur, showTime
 }) => {
@@ -42,4 +42,4 @@ const AgTextField: React.FC<AgDateTimePickerProps> = ({
         )} />
 }
 
-export default AgTextField;
+export default AgDateTimePicker;
