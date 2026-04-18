@@ -20,7 +20,8 @@ const AgTextField: React.FC<AgTextFieldProps> = ({
         defaultValue={value ?? ""}
         render={({ field }) => (
             <div>
-                <label className="ag-field-label" htmlFor={fieldName} style={{ paddingLeft: "5px"}}>
+                <label className="ag-field-label" htmlFor={fieldName}
+                    style={{ padding: "0px 0px 5px 5px", display: "block", fontWeight: "500"}}>
                     {label}
                     {isRequried && <Text type="danger">&nbsp;*</Text>}
                 </label>

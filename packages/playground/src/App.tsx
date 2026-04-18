@@ -14,7 +14,8 @@ function Form() {
     useEffect(() => {
         setValue("master.productId", "SP-A0121");
         setValue("master.productName", "ANHDO@131");
-        setValue("master.mode", "fifo")
+        setValue("master.mode", "fifo");
+        setValue("master.langs", ["c", "cplusplus"])
     }, []);
 
     var collection = new AgFieldCollection();
@@ -45,7 +46,23 @@ function Form() {
         options: [
             {label: "Bình quân gia quyền", value: "avg"},
             {label: "Nhập trước xuất trước", value: "fifo"}
-        ]
+        ],
+        isReadOnly: true,
+        colSpanLg: 6,
+        label: "Phương pháp tính giá"
+    });
+
+    collection.addCheckboxGroup({
+        name: "langs",
+        options: [
+            {label: "C#", value: "csharp"},
+            {label: "C++", value: "cplusplus"},
+            {label: "C", value: "c"},
+            {label: "PHP", value: "php"},
+        ],
+        isReadOnly: true,
+        colSpanLg: 6,
+        label: "Ngôn ngữ"
     });
 
     return <>

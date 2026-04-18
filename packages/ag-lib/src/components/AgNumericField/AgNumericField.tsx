@@ -35,8 +35,7 @@ const AgNumericField: React.FC<AgNumericFieldProps> = ({
                     <label
                         className="ag-field-label"
                         htmlFor={fieldName}
-                        style={{ paddingLeft: "5px" }}
-                    >
+                        style={{ padding: "0px 0px 5px 5px", display: "block", fontWeight: "500" }}>
                         {label}
                         {isRequried && <Text type="danger">&nbsp;*</Text>}
                     </label>
@@ -47,7 +46,7 @@ const AgNumericField: React.FC<AgNumericFieldProps> = ({
                         stringMode
                         formatter={formatNumber}
                         parser={parseNumber}
-                        style={{width: "100%"}}
+                        style={{ width: "100%" }}
                     />
                 </div>
             )}

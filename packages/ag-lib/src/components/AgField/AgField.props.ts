@@ -4,7 +4,7 @@ export default interface AgFieldProps {
     name: string,
     label?: string,
     scope?: string,
-    type: "text" | "number" | "radio",
+    type: "text" | "number" | "radio" | "checkbox",
     isReadOnly?: boolean,
     formOrderNum?: number,
     tableOrderNum?: number,

@@ -1,12 +1,13 @@
 import { Controller } from "react-hook-form";
-import AgRadioGroupProps from "./AgRadioGroup.props";
+import AgRadioGroupProps from "./AgCheckboxGroup.props";
 import { useAgFormContext } from "../AgFormProvider";
-import { Radio, Tag } from "antd";
+import { Checkbox, Radio, Tag } from "antd";
 import Text from "antd/es/typography/Text";
+import AgCheckboxGroupProps from "./AgCheckboxGroup.props";
 
-const AgRadioGroup: React.FC<AgRadioGroupProps> = ({
+const AgCheckboxGroup: React.FC<AgCheckboxGroupProps> = ({
     name, label, scope, value, options, isReadOnly, isRequried = false
-    , onChange, onBlur
+    , onChange
 }) => {
 
     const { control } = useAgFormContext();
@@ -26,28 +27,28 @@ const AgRadioGroup: React.FC<AgRadioGroupProps> = ({
                         {label}
                         {isRequried && <Text type="danger">&nbsp;*</Text>}
                     </label>
-                    <Radio.Group
+                    <Checkbox.Group
                         value={field.value}
-                        onChange={e => { field.onChange(e.target.value); onChange?.(e); }}
-                        onBlur={e => { field.onBlur(); onBlur?.(e); }}
+                        onChange={e => { field.onChange(e); onChange?.(e); }}
                         disabled={Boolean(isReadOnly)}
                         style={{ display: 'flex', flexDirection: 'row', gap: '12px' }}
                     >
                         {options.map(option => (
                             <Tag key={option.value}>
-                                <Radio
+                                <Checkbox
+                                    key={option.value}
                                     value={option.value}
                                     disabled={isReadOnly || option.disabled}
                                 >
                                     {option.label}
-                                </Radio>
+                                </Checkbox>
                             </Tag>
                         ))}
-                    </Radio.Group>
+                    </Checkbox.Group>
                 </div>
             )}
         />
     );
 };
 
-export default AgRadioGroup;
+export default AgCheckboxGroup;

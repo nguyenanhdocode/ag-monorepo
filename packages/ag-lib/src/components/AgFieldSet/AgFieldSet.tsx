@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { useAgFormContext } from "../AgFormProvider";
 import { AgNumericField, AgNumericFieldProps } from "../AgNumericField";
 import { AgRadioGroup, AgRadioGroupProps } from "../AgRadioGroup";
+import { AgCheckboxGroup, AgCheckboxGroupProps } from "../AgCheckboxGroup";
 
 const AgFieldSet: React.FC<AgFieldSetProps> = ({ 
     fields, scope, onChange, onBlur, isReadOnly
@@ -21,6 +22,8 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
                 return renderNumericField(field as AgNumericFieldProps);
             case "radio":
                 return renderRadioGroup(field as AgRadioGroupProps);
+            case "checkbox":
+                return renderCheckboxGroup(field as AgCheckboxGroupProps);
             default:
                 return <span>Unsupport field type: "{field.type}"</span>
         }
@@ -49,6 +52,13 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
         const value = getValues(fieldName);
         return <AgRadioGroup {...field} scope={scope} onChange={_ => onChange?.(value, field)}
         onBlur={_ => onBlur?.(value, field)} isReadOnly={isReadOnly}/>
+    }
+    
+    const renderCheckboxGroup = (field: AgCheckboxGroupProps) => {
+        const fieldName = scope ? `${scope}.${field.name}` : field.name;
+        const value = getValues(fieldName);
+        return <AgCheckboxGroup {...field} scope={scope} onChange={_ => onChange?.(value, field)}
+        isReadOnly={isReadOnly}/>
     }
 
     return <Row gutter={12} >

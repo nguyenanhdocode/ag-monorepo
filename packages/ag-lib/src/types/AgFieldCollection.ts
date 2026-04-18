@@ -1,4 +1,4 @@
-import { AgNumericFieldProps, AgTextFieldProps, AgRadioGroupProps } from "../components";
+import { AgNumericFieldProps, AgTextFieldProps, AgRadioGroupProps, AgCheckboxGroupProps } from "../components";
 import AgFieldProps from "../components/AgField/AgField.props";
 
 export default class AgFieldCollection {
@@ -24,6 +24,13 @@ export default class AgFieldCollection {
     public addRadioGroup(field: Omit<AgRadioGroupProps, "type">) {
         this._fields.push({
             type: "radio",
+            ...field
+        });
+    }
+
+    public addCheckboxGroup(field: Omit<AgCheckboxGroupProps, "type">) {
+        this._fields.push({
+            type: "checkbox",
             ...field
         });
     }
