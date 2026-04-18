@@ -74,6 +74,13 @@ function Form() {
         showTime: false
     });
 
+        collection.addDateRangePicker({
+        name: "range",
+        label: "Thời gian",
+        colSpanLg: 3,
+        showTime: !false,
+    });
+
     return <>
         <AgFieldSet scope="master" fields={collection.fields} isReadOnly={false} />
         <br></br >

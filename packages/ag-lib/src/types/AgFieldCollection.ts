@@ -1,4 +1,5 @@
 import { AgNumericFieldProps, AgTextFieldProps, AgRadioGroupProps, AgCheckboxGroupProps, AgDateTimePickerProps } from "../components";
+import { AgDateRangePickerProps } from "../components/AgDateRangePicker";
 import AgFieldProps from "../components/AgField/AgField.props";
 
 export default class AgFieldCollection {
@@ -37,7 +38,14 @@ export default class AgFieldCollection {
 
     public addDateTimePicker(field: Omit<AgDateTimePickerProps, "type">) {
         this._fields.push({
-            type: "date",
+            type: "datetime",
+            ...field
+        });
+    }
+
+    public addDateRangePicker(field: Omit<AgDateRangePickerProps, "type">) {
+        this._fields.push({
+            type: "daterange",
             ...field
         });
     }

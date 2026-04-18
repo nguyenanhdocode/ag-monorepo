@@ -8,6 +8,7 @@ import { AgNumericField, AgNumericFieldProps } from "../AgNumericField";
 import { AgRadioGroup, AgRadioGroupProps } from "../AgRadioGroup";
 import { AgCheckboxGroup, AgCheckboxGroupProps } from "../AgCheckboxGroup";
 import { AgDateTimePicker, AgDateTimePickerProps } from "../AgDateTimePicker";
+import { AgDateRangePicker, AgDateRangePickerProps } from "../AgDateRangePicker";
 
 const AgFieldSet: React.FC<AgFieldSetProps> = ({
     fields, scope, onChange, onBlur, isReadOnly
@@ -25,8 +26,10 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
                 return renderRadioGroup(field as AgRadioGroupProps);
             case "checkbox":
                 return renderCheckboxGroup(field as AgCheckboxGroupProps);
-            case "date":
+            case "datetime":
                 return renderDateTimePicker(field as AgDateTimePickerProps);
+            case "daterange":
+                return renderDateRangePicker(field as AgDateRangePickerProps);
             default:
                 return <span>Unsupport field type: "{field.type}"</span>
         }
@@ -68,6 +71,15 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
         const fieldName = scope ? `${scope}.${field.name}` : field.name;
         const value = getValues(fieldName);
         return <AgDateTimePicker {...field} scope={scope}
+            onChange={_ => onChange?.(value, field)}
+            onBlur={_ => onBlur?.(value, field)}
+            isReadOnly={isReadOnly} />
+    }
+
+    const renderDateRangePicker= (field: AgDateRangePickerProps) => {
+        const fieldName = scope ? `${scope}.${field.name}` : field.name;
+        const value = getValues(fieldName);
+        return <AgDateRangePicker {...field} scope={scope}
             onChange={_ => onChange?.(value, field)}
             onBlur={_ => onBlur?.(value, field)}
             isReadOnly={isReadOnly} />

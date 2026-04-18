@@ -4,7 +4,7 @@ export default interface AgFieldProps {
     name: string,
     label?: string,
     scope?: string,
-    type: "text" | "number" | "radio" | "checkbox" | "date",
+    type: "text" | "number" | "radio" | "checkbox" | "datetime" | "daterange",
     isReadOnly?: boolean,
     formOrderNum?: number,
     tableOrderNum?: number,
