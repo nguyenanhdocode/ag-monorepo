@@ -18,6 +18,7 @@ function Form() {
         setValue("master.mode", "fifo");
         setValue("master.langs", ["c", "cplusplus"]);
         setValue("master.fromDate", dayjs(new Date()));
+        setValue("master.type", "semi");
     }, []);
 
     var collection = new AgFieldCollection();
@@ -46,8 +47,8 @@ function Form() {
     collection.addRadioGroup({
         name: "mode",
         options: [
-            {label: "Bình quân gia quyền", value: "avg"},
-            {label: "Nhập trước xuất trước", value: "fifo"}
+            { label: "Bình quân gia quyền", value: "avg" },
+            { label: "Nhập trước xuất trước", value: "fifo" }
         ],
         isReadOnly: true,
         colSpanLg: 6,
@@ -57,10 +58,10 @@ function Form() {
     collection.addCheckboxGroup({
         name: "langs",
         options: [
-            {label: "C#", value: "csharp"},
-            {label: "C++", value: "cplusplus"},
-            {label: "C", value: "c"},
-            {label: "PHP", value: "php"},
+            { label: "C#", value: "csharp" },
+            { label: "C++", value: "cplusplus" },
+            { label: "C", value: "c" },
+            { label: "PHP", value: "php" },
         ],
         isReadOnly: true,
         colSpanLg: 6,
@@ -74,11 +75,31 @@ function Form() {
         showTime: false
     });
 
-        collection.addDateRangePicker({
+    collection.addDateRangePicker({
         name: "range",
         label: "Thời gian",
         colSpanLg: 3,
         showTime: !false,
+    });
+
+    collection.addSelect({
+        name: "type",
+        options: [{value: "semi", label: "Bán dẫn"}, {value: "passive", label: "Thụ động"}],
+        label: "Loại",
+        colSpanLg: 3,
+    });
+
+    collection.addMultiSelect({
+        name: "tag",
+        options: [
+            {value: "arduino", label: "Arduino"}, 
+            {value: "cambien", label: "Cảm biến"},
+            {value: "esp32", label: "ESP32"},
+            {value: "rf", label: "RF"},
+            {value: "wifi", label: "Mạng WiFi"},
+        ],
+        label: "Tag",
+        colSpanLg: 3,
     });
 
     return <>

@@ -5,3 +5,6 @@ export * from "./AgNumericField";
 export * from "./AgRadioGroup";
 export * from "./AgCheckboxGroup";
 export * from "./AgDateTimePicker";
+export * from "./AgDateRangePicker";
+export * from "./AgSelect";
+export * from "./AgMultiSelect";
