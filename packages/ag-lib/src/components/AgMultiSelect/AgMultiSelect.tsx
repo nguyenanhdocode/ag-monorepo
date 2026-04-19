@@ -82,8 +82,8 @@ const AgMultiSelect: React.FC<AgMultiSelectProps> = ({
                                 }
                             }}>
                                 {isSelectedAll
-                                    ? <Typography><DeleteFilled />&nbsp;Bỏ chọn tất cả</Typography>
-                                    : <Typography><CheckSquareFilled />&nbsp;Chọn tất cả</Typography>}
+                                    ? <Typography><DeleteFilled />&nbsp;Bỏ chọn tất cả ({options.length})</Typography>
+                                    : <Typography><CheckSquareFilled />&nbsp;Chọn tất cả ({options.length})</Typography>}
                             </Button>
                         }
                         return <div style={{ display: "flex" }}>
