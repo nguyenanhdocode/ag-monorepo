@@ -177,7 +177,17 @@ function Form() {
     }, []);
 
     return <>
-        <AgFieldSet scope="master" fields={collection.fields} isReadOnly={false} />
+        <AgFieldSet scope="master" fields={collection.fields} isReadOnly={false}
+        onFieldsConfiguring={(fields) => {
+            const productId = fields.find(p => p.name == "productId");
+            if (productId) {
+                productId.label = "MÃ";
+            }
+            return fields;
+        }}
+        onFieldRendering={(field, node) => {
+            return node;
+        }} />
         <br></br >
         {/* <AgTable fields={collection.fields} name="detail" editable
             selectionMode="multiple"

@@ -14,7 +14,13 @@ import { AgMultiSelect, AgMultiSelectProps } from "../AgMultiSelect";
 import { useAgLocale } from "../AgLocaleProvider";
 
 const AgFieldSet: React.FC<AgFieldSetProps> = ({
-    fields, scope, onChange, onBlur, isReadOnly
+    fields
+    , scope
+    , isReadOnly
+    , onChange
+    , onBlur
+    , onFieldsConfiguring
+    , onFieldRendering
 }) => {
 
     const { getValues } = useAgFormContext();
@@ -123,12 +129,27 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
     }
 
     return <Row gutter={12} >
-        {useMemo(() => (
-            fields.map((p, k) => <Col key={k} xs={(p.colSpanXs ?? 12) * 2} sm={(p.colSpanSm ?? 12) * 2}
-                md={(p.colSpanMd ?? 12) * 2} lg={(p.colSpanLg ?? 12) * 2} xl={(p.colSpanLg ?? 12) * 2}
-                xxl={(p.colSpanLg ?? 12) * 2} xxxl={(p.colSpanLg ?? 12) * 2}
-                style={{ paddingTop: "5px", paddingBottom: "5px" }}>{renderField(p)}</Col>)
-        ), [fields])}
+        {useMemo(() => {
+
+            const _fields = onFieldsConfiguring ? onFieldsConfiguring(fields) : fields;
+
+            return _fields.map((p, k) => (
+                <Col key={k}
+                    xs={(p.colSpanXs ?? 12) * 2}
+                    sm={(p.colSpanSm ?? 12) * 2}
+                    md={(p.colSpanMd ?? 12) * 2}
+                    lg={(p.colSpanLg ?? 12) * 2}
+                    xl={(p.colSpanLg ?? 12) * 2}
+                    xxl={(p.colSpanLg ?? 12) * 2}
+                    xxxl={(p.colSpanLg ?? 12) * 2}
+                    style={{ paddingTop: "5px", paddingBottom: "5px" }}>
+                    {(() => {
+                        const node = renderField(p);
+                        return onFieldRendering ? onFieldRendering(p, node) : node;
+                    })()}
+                </Col>))
+        }, [fields]
+        )}
     </Row>
 }
 
