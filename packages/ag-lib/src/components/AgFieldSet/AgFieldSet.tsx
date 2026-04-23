@@ -11,12 +11,14 @@ import { AgDateTimePicker, AgDateTimePickerProps } from "../AgDateTimePicker";
 import { AgDateRangePicker, AgDateRangePickerProps } from "../AgDateRangePicker";
 import { AgSelect, AgSelectProps } from "../AgSelect";
 import { AgMultiSelect, AgMultiSelectProps } from "../AgMultiSelect";
+import { useAgLocale } from "../AgLocaleProvider";
 
 const AgFieldSet: React.FC<AgFieldSetProps> = ({
     fields, scope, onChange, onBlur, isReadOnly
 }) => {
 
     const { getValues } = useAgFormContext();
+    const { decimalScale, dateFormat, dateTimeFormat, timeFormat, formatNumber } = useAgLocale();
 
     const renderField = (field: AgFieldProps) => {
         switch (field.type) {
@@ -44,10 +46,11 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
     const renderTextField = (field: AgTextFieldProps) => {
         const fieldName = scope ? `${scope}.${field.name}` : field.name;
         const value = getValues(fieldName);
+
         return <AgTextField {...field} scope={scope}
             onChange={_ => onChange?.(value, field)}
             onBlur={_ => onBlur?.(value, field)}
-            isReadOnly={isReadOnly} />
+            isReadOnly={field.isReadOnly != undefined ? field.isReadOnly : isReadOnly} />
     }
 
     const renderNumericField = (field: AgNumericFieldProps) => {
@@ -56,21 +59,25 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
         return <AgNumericField {...field} scope={scope}
             onChange={_ => onChange?.(value, field)}
             onBlur={_ => onBlur?.(value, field)}
-            isReadOnly={isReadOnly} />
+            formatter={formatNumber}
+            isReadOnly={field.isReadOnly != undefined ? field.isReadOnly : isReadOnly} />
     }
 
     const renderRadioGroup = (field: AgRadioGroupProps) => {
         const fieldName = scope ? `${scope}.${field.name}` : field.name;
         const value = getValues(fieldName);
-        return <AgRadioGroup {...field} scope={scope} onChange={_ => onChange?.(value, field)}
-            onBlur={_ => onBlur?.(value, field)} isReadOnly={isReadOnly} />
+        return <AgRadioGroup {...field} scope={scope}
+            onChange={_ => onChange?.(value, field)}
+            onBlur={_ => onBlur?.(value, field)}
+            isReadOnly={field.isReadOnly != undefined ? field.isReadOnly : isReadOnly} />
     }
 
     const renderCheckboxGroup = (field: AgCheckboxGroupProps) => {
         const fieldName = scope ? `${scope}.${field.name}` : field.name;
         const value = getValues(fieldName);
-        return <AgCheckboxGroup {...field} scope={scope} onChange={_ => onChange?.(value, field)}
-            isReadOnly={isReadOnly} />
+        return <AgCheckboxGroup {...field} scope={scope}
+            onChange={_ => onChange?.(value, field)}
+            isReadOnly={field.isReadOnly != undefined ? field.isReadOnly : isReadOnly} />
     }
 
     const renderDateTimePicker = (field: AgDateTimePickerProps) => {
@@ -79,7 +86,10 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
         return <AgDateTimePicker {...field} scope={scope}
             onChange={_ => onChange?.(value, field)}
             onBlur={_ => onBlur?.(value, field)}
-            isReadOnly={isReadOnly} />
+            dateFormat={dateFormat}
+            timeFormat={timeFormat}
+            dateTimeFormat={dateTimeFormat}
+            isReadOnly={field.isReadOnly != undefined ? field.isReadOnly : isReadOnly} />
     }
 
     const renderDateRangePicker = (field: AgDateRangePickerProps) => {
@@ -88,7 +98,10 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
         return <AgDateRangePicker {...field} scope={scope}
             onChange={_ => onChange?.(value, field)}
             onBlur={_ => onBlur?.(value, field)}
-            isReadOnly={isReadOnly} />
+            dateFormat={dateFormat}
+            timeFormat={timeFormat}
+            dateTimeFormat={dateTimeFormat}
+            isReadOnly={field.isReadOnly != undefined ? field.isReadOnly : isReadOnly} />
     }
 
     const renderSelect = (field: AgSelectProps) => {
@@ -97,7 +110,7 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
         return <AgSelect {...field} scope={scope}
             onChange={_ => onChange?.(value, field)}
             onBlur={_ => onBlur?.(value, field)}
-            isReadOnly={isReadOnly} />
+            isReadOnly={field.isReadOnly != undefined ? field.isReadOnly : isReadOnly} />
     }
 
     const renderMultiSelect = (field: AgMultiSelectProps) => {
@@ -106,7 +119,7 @@ const AgFieldSet: React.FC<AgFieldSetProps> = ({
         return <AgMultiSelect {...field} scope={scope}
             onChange={_ => onChange?.(value, field)}
             onBlur={_ => onBlur?.(value, field)}
-            isReadOnly={isReadOnly} />
+            isReadOnly={field.isReadOnly != undefined ? field.isReadOnly : isReadOnly} />
     }
 
     return <Row gutter={12} >

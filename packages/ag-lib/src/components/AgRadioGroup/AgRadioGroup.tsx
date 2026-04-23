@@ -2,16 +2,21 @@ import { Controller } from "react-hook-form";
 import AgRadioGroupProps from "./AgRadioGroup.props";
 import { useAgFormContext } from "../AgFormProvider";
 import { Radio, Tag } from "antd";
-import Text from "antd/es/typography/Text";
 
 const AgRadioGroup: React.FC<AgRadioGroupProps> = ({
-    name, label, scope, value, options, isReadOnly, isRequried = false
-    , onChange, onBlur
+    name
+    , label
+    , scope
+    , value
+    , options
+    , isReadOnly
+    , isRequried = false
+    , onChange
+    , onBlur
 }) => {
 
     const { control } = useAgFormContext();
     const fieldName = scope ? `${scope}.${name}` : name;
-
     return (
         <Controller
             name={fieldName}
@@ -24,7 +29,7 @@ const AgRadioGroup: React.FC<AgRadioGroupProps> = ({
                         htmlFor={fieldName}
                         style={{ padding: "0px 0px 5px 5px", display: "block", fontWeight: "500"}}>
                         {label}
-                        {isRequried && <Text type="danger">&nbsp;*</Text>}
+                        {isRequried && <span style={{ color: "var(--ant-color-error-text)" }}> *</span>}
                     </label>
                     <Radio.Group
                         value={field.value}
@@ -34,14 +39,11 @@ const AgRadioGroup: React.FC<AgRadioGroupProps> = ({
                         style={{ display: 'flex', flexDirection: 'row', gap: '12px' }}
                     >
                         {options.map(option => (
-                            <Tag key={option.value}>
-                                <Radio
-                                    value={option.value}
-                                    disabled={isReadOnly || option.disabled}
-                                >
-                                    {option.label}
-                                </Radio>
-                            </Tag>
+                            <Radio key={option.value}
+                                value={option.value}
+                                disabled={isReadOnly || option.disabled}>
+                                {option.label}
+                            </Radio>
                         ))}
                     </Radio.Group>
                 </div>

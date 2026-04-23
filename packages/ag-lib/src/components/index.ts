@@ -8,3 +8,5 @@ export * from "./AgDateTimePicker";
 export * from "./AgDateRangePicker";
 export * from "./AgSelect";
 export * from "./AgMultiSelect";
+// export * from "./AgTable";
+export * from "./AgLocaleProvider";

@@ -6,20 +6,12 @@ import Text from "antd/es/typography/Text";
 
 const AgNumericField: React.FC<AgNumericFieldProps> = ({
     name, label, scope, value, placeholder, type = "text", isReadOnly, isRequried = false
-    , min, max, decimalScale
+    , min, max, formatter
     , onChange, onBlur
 }) => {
 
     const { control } = useAgFormContext();
     const fieldName = scope ? `${scope}.${name}` : name;
-
-    const formatNumber = (value?: string) => {
-        if (!value) return "";
-        return new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        }).format(Number(value));
-    };
 
     const parseNumber = (value?: string): string => {
         return value ? value.replace(/,/g, "") : "";
@@ -37,16 +29,25 @@ const AgNumericField: React.FC<AgNumericFieldProps> = ({
                         htmlFor={fieldName}
                         style={{ padding: "0px 0px 5px 5px", display: "block", fontWeight: "500" }}>
                         {label}
-                        {isRequried && <Text type="danger">&nbsp;*</Text>}
+                        {isRequried && <span style={{ color: "var(--ant-color-error-text)" }}> *</span>}
                     </label>
 
                     <InputNumber
                         value={field.value}
-                        onChange={e => field.onChange(e)}
+                        onChange={(value) => {
+                            const num = value === null || value === "" ? null : Number(value);
+                            field.onChange(num);
+                            onChange?.(num);
+                        }}
+                        onBlur={e => { field.onBlur(); onBlur?.(e); }}
                         stringMode
-                        formatter={formatNumber}
+                        formatter={formatter}
                         parser={parseNumber}
                         style={{ width: "100%" }}
+                        min={min?.toString()}
+                        max={max?.toString()}
+                        placeholder={placeholder}
+                        readOnly={isReadOnly}
                     />
                 </div>
             )}

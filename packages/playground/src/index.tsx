@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import {AgLocaleProvider} from "ag-lib";
 
 const rootElement = document.getElementById("root");
 
@@ -12,6 +13,8 @@ const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>
+    <AgLocaleProvider>
       <App />
+    </AgLocaleProvider>
   </React.StrictMode>
 );

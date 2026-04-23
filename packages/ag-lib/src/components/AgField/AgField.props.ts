@@ -13,4 +13,5 @@ export default interface AgFieldProps {
     colSpanSm?: ColSpan,
     colSpanMd?: ColSpan,
     colSpanLg?: ColSpan,
+    gridColWidth?: number
 }

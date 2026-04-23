@@ -1,18 +1,29 @@
 import { Controller } from "react-hook-form";
 import { useAgFormContext } from "../AgFormProvider";
-import { Button, Divider, Input, Select, Space, Typography } from "antd";
+import { Button, Divider, Select, Typography } from "antd";
 import Text from "antd/es/typography/Text";
 import { AgMultiSelectProps } from ".";
 import { CheckSquareFilled, DeleteFilled } from "@ant-design/icons";
 import { DefaultOptionType } from "antd/es/select";
+import { theme } from "antd";
 
 const AgMultiSelect: React.FC<AgMultiSelectProps> = ({
-    name, label, scope, value, placeholder, type = "select", isReadOnly, isRequried = false
-    , onChange, options
+    name
+    , label
+    , scope
+    , value
+    , placeholder
+    , type = "select"
+    , isReadOnly
+    , isRequried = false
+    , options
+    , onChange
+    , onBlur
 }) => {
 
     const { control, setValue } = useAgFormContext();
     const fieldName = scope ? `${scope}.${name}` : name;
+    const { cssVar } = theme.useToken();
 
     const persistenceOptions: DefaultOptionType[] = [
         {
@@ -41,31 +52,35 @@ const AgMultiSelect: React.FC<AgMultiSelectProps> = ({
                 <label className="ag-field-label" htmlFor={fieldName}
                     style={{ padding: "0px 0px 5px 5px", display: "block", fontWeight: "500" }}>
                     {label}
-                    {isRequried && <Text type="danger">&nbsp;*</Text>}
+                    {isRequried && <span style={{ color: "var(--ant-color-error-text)" }}> *</span>}
                 </label>
                 <Select
                     mode="multiple"
                     id={fieldName}
                     value={field.value ?? []}
                     onChange={e => { field.onChange(e); onChange?.(e); }}
+                    onBlur={e => {field.onBlur(); onBlur?.(e)}}
                     placeholder={placeholder}
                     size="medium"
                     options={_options}
                     style={{ width: "100%" }}
+                    disabled={isReadOnly}
                     showSearch={{
                         filterOption: (input, option) => {
-                            return (option?.value == "__header__" ||
-                            (option?.label ?? '').toString().toLowerCase().includes(input.toLowerCase())
-                                || (option?.value ?? '').toString().toLowerCase().includes(input.toLowerCase()))
-                                && option?.value != "__selectall__"
+                            return (option?.value == "__header__"
+                                || option?.value == "__selectall__"
+                                || (option?.label ?? '').toString().toLowerCase().includes(input.toLowerCase())
+                                || (option?.value ?? '').toString().toLowerCase().includes(input.toLowerCase())
+                            )
                         },
                     }}
-                    optionRender={(option) => {
+                    optionRender={(option, { index }) => {
                         if (option.data.value == "__header__") {
                             return <div style={{ cursor: "pointer" }}>
                                 <div style={{ display: "flex", cursor: "pointer" }}>
-                                    <Text style={{ flexGrow: 1, textAlign: "center", fontWeight: "bold" }}>Mã</Text>
-                                    <Text style={{ flexGrow: 1, textAlign: "center", fontWeight: "bold" }}>Tên</Text>
+                                    <Text style={{ width: "50px", textAlign: "center", fontWeight: "bold", color: cssVar.colorPrimary }}>STT</Text>
+                                    <Text style={{ flexGrow: 1, textAlign: "center", fontWeight: "bold", color: cssVar.colorPrimary }}>Mã</Text>
+                                    <Text style={{ flexGrow: 1, textAlign: "center", fontWeight: "bold", color: cssVar.colorPrimary }}>Tên</Text>
                                 </div>
                                 <Divider style={{ padding: 0, margin: "5px 0 5px 0", cursor: "pointer" }} />
                             </div>
@@ -82,11 +97,12 @@ const AgMultiSelect: React.FC<AgMultiSelectProps> = ({
                                 }
                             }}>
                                 {isSelectedAll
-                                    ? <Typography><DeleteFilled />&nbsp;Bỏ chọn tất cả ({options.length})</Typography>
-                                    : <Typography><CheckSquareFilled />&nbsp;Chọn tất cả ({options.length})</Typography>}
+                                    ? <Typography style={{ color: cssVar.colorPrimary }} ><DeleteFilled />&nbsp;Bỏ chọn tất cả</Typography>
+                                    : <Typography style={{ color: cssVar.colorPrimary }} ><CheckSquareFilled />&nbsp;Chọn tất cả</Typography>}
                             </Button>
                         }
                         return <div style={{ display: "flex" }}>
+                            <Text style={{ width: "50px" }}>{index - 1}</Text>
                             <Text style={{ width: "50%" }}>{option.data.value}</Text>
                             <Text style={{ width: "50%" }}>{option.data.label}</Text>
                         </div>
